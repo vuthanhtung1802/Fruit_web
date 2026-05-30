@@ -1,0 +1,30 @@
+@import "normalize.css";
+@import url("https://fonts.googleapis.com/css2?family=Oleo+Script+Swash+Caps&family=Open+Sans:wght@300;400;500;600;700;800&family=Pacifico&family=Roboto:wght@400;500;700;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Oleo+Script+Swash+Caps&family=Open+Sans:wght@300;400;500;600;700;800&family=Pacifico&family=Roboto+Condensed:wght@300;400;700&family=Roboto:wght@400;500;700;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Oleo+Script+Swash+Caps&family=Open+Sans:wght@300;400;500;600;700;800&family=Pacifico&family=Pattaya&family=Roboto+Condensed:wght@300;400;700&family=Roboto:wght@400;500;700;900&display=swap");
+
+:root {
+  --text-color: #333333;
+  --primary-color: #2e7d32;
+  --primary-hover: #1b5e20;
+  --secondary-color: #81c784;
+  --background-light: #f5f5f5;
+  --text-muted: #757575;
+  --border-radius: 8px;
+  --transition-speed: 0.3s;
+}
+
+html {
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+}
+body {
+  font-family: "Open Sans", "Roboto", sans-serif;
+  color: var(--text-color);
+  background-color: #fafafa;
+}
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
