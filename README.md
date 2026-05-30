@@ -61,23 +61,6 @@ Dự án được tổ chức thành 2 thư mục chính:
 
 ---
 
-## 🚀 Hướng dẫn cài đặt & Chạy ứng dụng (Installation & Setup)
-
-### Cấu hình môi trường (Environment Variables)
-
-Tạo file `.env` trong thư mục `backend_sell_fruit-main/` với các biến sau:
-
-```env
-PORT=5000
-MONGODB_URI=mongodb://localhost:27017/sell_fruit
-JWT_SECRET=your_jwt_secret_key
-CLOUDINARY_NAME=your_cloudinary_name
-CLOUDINARY_API_KEY=your_cloudinary_api_key
-CLOUDINARY_API_SECRET=your_cloudinary_api_secret
-SENDGRID_API_KEY=your_sendgrid_api_key
-GEMINI_API_KEY=your_gemini_api_key
-```
-
 ### Chạy Backend (API Server)
 
 ```bash
