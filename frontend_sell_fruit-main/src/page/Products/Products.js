@@ -10,6 +10,7 @@ function Products() {
   let cx = classNames.bind(styles);
 
   const [items, setItems] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const [type, setType] = useState("all");
   const [nameSort, setNameSort] = useState("date");
@@ -54,6 +55,7 @@ function Products() {
     window.scroll(0, 0);
     async function fetchData() {
       try {
+        setLoading(true);
         const res = await axiosInstance.get(
           `/fruitItems/getNamebyType?type=${type}&nameSort=${nameSort}&typeSort=${typeSort}&numberPage=${numberPage}`
         );
@@ -61,7 +63,10 @@ function Products() {
           setItems({ ...res.data });
         }
       } catch (error) {
-        throw new Error("Something went wrong");
+        console.error("Failed to fetch products:", error);
+        setItems({ item: [], numberTotalPage: 0 });
+      } finally {
+        setLoading(false);
       }
     }
     fetchData();
@@ -98,33 +103,34 @@ function Products() {
             <SideBar onHandleType={handleType} type={type}></SideBar>
           </div>
           <div>
-            {items && items.item.length > 0 ? (
-              <div className={cx("products_list_items")}>
-                {items.item.map((item, index) => {
-                  return (
-                    <Item
-                      key={item._id}
-                      linkPicture={item.img}
-                      nameItem={item.name}
-                      priceOld={item.price}
-                      priceItem={item.realPrice}
-                      sale={item.sale}
-                      idItem={item._id}
-                    ></Item>
-                  );
-                })}
-              </div>
+            {loading ? (
+              <div className={cx("products_loading")}>Đang tải...</div>
+            ) : items && items.item.length > 0 ? (
+              <>
+                <div className={cx("products_list_items")}>
+                  {items.item.map((item) => {
+                    return (
+                      <Item
+                        key={item._id}
+                        linkPicture={item.img}
+                        nameItem={item.name}
+                        priceOld={item.price}
+                        priceItem={item.realPrice}
+                        sale={item.sale}
+                        idItem={item._id}
+                      ></Item>
+                    );
+                  })}
+                </div>
+                <Paging
+                  numberTotalPage={items.numberTotalPage}
+                  onHandleNumberPage={handleNumberPage}
+                  numberPage={numberPage}
+                ></Paging>
+              </>
             ) : (
               <div className={cx("no_items")}>Không có sản phẩm nào</div>
             )}
-
-            {items && items.item.length > 0 ? (
-              <Paging
-                numberTotalPage={items.numberTotalPage}
-                onHandleNumberPage={handleNumberPage}
-                numberPage={numberPage}
-              ></Paging>
-            ) : null}
           </div>
         </div>
       </div>

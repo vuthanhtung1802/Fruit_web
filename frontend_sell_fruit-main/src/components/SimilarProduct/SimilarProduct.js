@@ -11,9 +11,11 @@ function SimilarProduct({ typeItem, idItemCurren }) {
   let cx = classNames.bind(styles);
 
   const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     async function fetchData() {
       try {
+        setLoading(true);
         const res = await axiosInstance.get(
           `fruitItems/similarItems?typeItem=${typeItem}&idItemCurren=${idItemCurren}`
         );
@@ -21,7 +23,9 @@ function SimilarProduct({ typeItem, idItemCurren }) {
           setItems(res.data);
         }
       } catch (error) {
-        throw new Error("Có lỗi");
+        console.error("Failed to fetch similar products:", error);
+      } finally {
+        setLoading(false);
       }
     }
     fetchData();
@@ -34,19 +38,25 @@ function SimilarProduct({ typeItem, idItemCurren }) {
         Sản phẩm tương tự
       </h1>
       <div className={cx("product_detail_container_section_3_list_item")}>
-        {items.map((item, index) => {
-          return (
-            <Item
-              key={index}
-              linkPicture={item.img}
-              nameItem={item.name}
-              priceOld={item.price}
-              priceItem={item.realPrice}
-              sale={item.sale}
-              idItem={item._id}
-            ></Item>
-          );
-        })}
+        {loading ? (
+          <div className={cx("similar_loading")}>Đang tải...</div>
+        ) : items.length > 0 ? (
+          items.map((item) => {
+            return (
+              <Item
+                key={item._id}
+                linkPicture={item.img}
+                nameItem={item.name}
+                priceOld={item.price}
+                priceItem={item.realPrice}
+                sale={item.sale}
+                idItem={item._id}
+              ></Item>
+            );
+          })
+        ) : (
+          <div className={cx("similar_empty")}>Không có sản phẩm tương tự</div>
+        )}
       </div>
     </div>
   );

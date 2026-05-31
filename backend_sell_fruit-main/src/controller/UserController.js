@@ -1,7 +1,6 @@
 const user = require("../Schema/User");
 const { createToken } = require("../middleware/handleToken");
 const { uploadToCloudinary } = require("../cloudinary/uploadToCloudinary");
-const bcrypt = require("bcryptjs");
 //Đăng Ký
 exports.register = async (req, res) => {
   const {
@@ -74,14 +73,9 @@ exports.login = async (req, res, next) => {
   try {
     const data = await user.findOne({
       account: account,
+      password: password,
     });
     if (data) {
-      const isMatch = await bcrypt.compare(password, data.password);
-      if (!isMatch) {
-        return res
-          .status(200)
-          .send({ message: "Tài khoản hoặc mật khẩu không đúng" });
-      }
       const { firstName, lastName, phoneNumber, emailAddress, address } = data;
       let token = createToken(lastName + firstName);
       if (data.admin === true) {
@@ -150,7 +144,7 @@ exports.editProfile = async (req, res, next) => {
         },
         {
           new: true,
-        },
+        }
       );
       if (doc) {
         if (doc.admin === true) {

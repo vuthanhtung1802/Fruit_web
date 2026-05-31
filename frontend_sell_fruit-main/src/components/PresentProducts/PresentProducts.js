@@ -21,16 +21,24 @@ function PresentProducts({
   let cx = classNames.bind(styles);
 
   const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchData() {
-      const response = await axiosInstance.get(
-        `${ApiProducts}?type=${typeProduct}&nameSort=date&typeSort=1&numberPage=0`
-      );
-      if (response) {
-        setItems([...response.data.item]);
+      try {
+        setLoading(true);
+        const response = await axiosInstance.get(
+          `${ApiProducts}?type=${typeProduct}&nameSort=date&typeSort=1&numberPage=0`
+        );
+        if (response && response.data && response.data.item) {
+          setItems([...response.data.item]);
+        }
+      } catch (error) {
+        console.error("Failed to fetch products:", error);
+      } finally {
+        setLoading(false);
       }
     }
     fetchData();
@@ -59,12 +67,14 @@ function PresentProducts({
           </h1>
         </div>
         <p className={cx("present-products_text")}>{text}</p>
-        <div className={cx("present-products_list-products")}>
-          {items &&
-            items.map((item, index) => {
+        {loading ? (
+          <div className={cx("present-products_status")}>Đang tải...</div>
+        ) : items && items.length > 0 ? (
+          <div className={cx("present-products_list-products")}>
+            {items.map((item) => {
               return (
                 <Item
-                  key={index}
+                  key={item._id}
                   linkPicture={item.img}
                   nameItem={item.name}
                   priceOld={item.price}
@@ -74,7 +84,12 @@ function PresentProducts({
                 ></Item>
               );
             })}
-        </div>
+          </div>
+        ) : (
+          <div className={cx("present-products_status")}>
+            Không có sản phẩm nào
+          </div>
+        )}
         <div
           className={cx("present-products_btn-more_wrapper", {
             btn_display: btnDisplay,

@@ -41,13 +41,13 @@
   color: #818181;
   text-decoration: line-through;
 }
-.present_products_old_price_visible {
-  visibility: hidden;
-}
 .present-products_new-price {
   margin-left: 0.6rem;
   font-size: 2rem;
   color: #ff2929;
+}
+.present-products_new-price_no-margin {
+  margin-left: 0;
 }
 .present-products_new-price > strong {
   text-decoration: underline;

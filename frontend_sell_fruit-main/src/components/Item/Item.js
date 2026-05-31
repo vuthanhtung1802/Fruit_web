@@ -20,26 +20,28 @@ function Item({
     >
       <img
         src={linkPicture}
-        alt={linkPicture}
+        alt={nameItem}
         className={cx("present-products_img")}
       ></img>
       <div className={cx("present-products_name")}>{nameItem}</div>
       <div className={cx("present-products_price")}>
+        {sale > 0 && (
+          <span className={cx("present-products_old-price")}>
+            {handleNumberPrice(priceOld)}
+            <strong>đ</strong>
+          </span>
+        )}
         <span
-          className={cx("present-products_old-price", {
-            present_products_old_price_visible: sale === 0,
+          className={cx("present-products_new-price", {
+            "present-products_new-price_no-margin": !(sale > 0),
           })}
         >
-          {handleNumberPrice(priceOld)}
-          <strong>đ</strong>
-        </span>
-        <span className={cx("present-products_new-price")}>
           {handleNumberPrice(priceItem)}
           <strong>đ</strong>
         </span>
       </div>
       <div className={cx("present-products_wrapper-button")}>
-        <button className={cx("present-products_button")}>Mua ngay</button>
+        <span className={cx("present-products_button")}>Mua ngay</span>
       </div>
       {sale > 0 && (
         <div className={cx("present-products-sale")}>

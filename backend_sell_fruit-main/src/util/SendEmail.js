@@ -6,7 +6,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 exports.sendEmail = async (req, res, next) => {
   const { name, phoneNumber, message } = req.query;
   const msg = {
-    to: "vuthanhtung1802@gmail.com",
+    to: "levietduc2000cb@gmail.com",
     from: "fruituser443@gmail.com", // Use the email address or domain you verified above
     subject: "Liên hệ tư vấn mua hàng",
     text: `

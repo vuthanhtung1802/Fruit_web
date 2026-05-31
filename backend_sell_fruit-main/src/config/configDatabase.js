@@ -1,9 +1,7 @@
 const mongoose = require("mongoose");
 const connectDb = async () => {
   try {
-    await mongoose.connect(
-      "mongodb+srv://levietduc2000cb:0986929235QAZqaz.@cluster0.whczhnm.mongodb.net/fruit"
-    );
+    await mongoose.connect(process.env.MONGODB_URI);
     console.log("Database connect Success");
   } catch (error) {
     console.log("Database connect Failure");

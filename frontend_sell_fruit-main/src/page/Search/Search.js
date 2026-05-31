@@ -29,7 +29,8 @@ function Search() {
           setDataItem({ ...res.data });
         }
       } catch (error) {
-        throw new Error(error);
+        console.error("Search failed:", error);
+        setDataItem({ item: [], numberTotalPage: 0 });
       }
     }
     if (searchNameCurrent.current !== params.searchName) {
